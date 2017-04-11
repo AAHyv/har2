@@ -53,3 +53,44 @@ $ git pull & git push
 
 Annettuamme GitHubin tunnukset ja salasanat saimme README.md näkyviin selaimeen ja täten myös raportin.
 
+
+# Puppet moduli
+
+Päätin ottaa mallia Jani Poutaselta ja tehdä muutokset terminaliin. Hyvän ohjeen löytää linkistä:  http://askubuntu.com/questions/517677/how-to-get-a-colored-bash 
+Asennettuamme puppetin meillä on jo etc kansion alla puppet kansio sisältöineen. Navigoidaan sinne cd /etc/puppet/modules komennon avulla ja sudo mkdir komennolla luodaan "terminal" kansio jonka alle vielä kaksi: "manifests" ja "templates". 
+Manifests kansioon annetaan kometno sudoedit init.pp jonka sisällöksi määritetään:
+
+$ class terminal {
+        file { '/home/xubuntu/.bashrc':
+    	content=>template('terminal/bash.bashrc.erb')
+    	}
+}
+
+Nyt palaan cd komennolla kotihakemistoon ja kopioin ja siirrän .bashrc tiedoston johon sitten teen muokkaukseni.
+
+$ sudo cp .bashrc /etc/puppet/modules/terminal/templates/
+
+$ sudo mv .bashrc bash.bashrc.erb
+
+$ sudo mv bash.bashrc.erb /etc/puppet/modules/terminal/templates/
+
+Palasin templates kansioon minne juuri siirsin bash.bashrc.eb tiedostoni ja lisäsin sinne:
+
+u = "sudo apt-get update" 
+
+sekä muokkasin #force_color_prompt=yes huomautuksesta komennoksi poistamalla risuaidan.
+
+Tallennettuani kuitenkin tein virheen ja hävitin kyseisen teidoston.
+
+mv bash.bashrc.erb /$
+
+En onnistunut luomaan uutta tiedostoa kotihakemistossa virheilmoiutksen ettei ole mistä kopioida enää. 
+
+Eli tehtävä jäi tälläsekseen.
+
+Siirrän kansio ryhmän "modules"sista alaspäin har2 kansiooni komennolla:
+
+$ cp -r terminal /home/xubuntu/har2
+
+minkä jälkeen päivitän tämän GitHubiin.
+
